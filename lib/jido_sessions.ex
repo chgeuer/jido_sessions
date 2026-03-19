@@ -27,4 +27,12 @@ defmodule JidoSessions do
       :pi -> Parsers.Pi.parse_turns(events)
     end
   end
+
+  @doc """
+  Generates a handoff markdown document for a session.
+  """
+  @spec generate_handoff(module(), term(), String.t()) :: {:ok, String.t()} | {:error, term()}
+  defdelegate generate_handoff(store_mod, store, session_id),
+    to: JidoSessions.Handoff,
+    as: :generate
 end

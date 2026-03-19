@@ -22,6 +22,22 @@ defmodule JidoSessions.Session do
           agent_version: String.t() | nil
         }
 
+  @doc "Creates a prefixed session ID like 'gh_abc123' or 'claude_abc123'."
+  @spec prefixed_id(agent(), String.t()) :: String.t()
+  def prefixed_id(agent, provider_id) do
+    prefix =
+      case agent do
+        :copilot -> "gh"
+        :claude -> "claude"
+        :codex -> "codex"
+        :gemini -> "gemini"
+        :pi -> "pi"
+        other -> to_string(other)
+      end
+
+    "#{prefix}_#{provider_id}"
+  end
+
   @enforce_keys [:id, :agent]
   defstruct [
     :id,
