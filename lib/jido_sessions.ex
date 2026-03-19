@@ -1,18 +1,30 @@
 defmodule JidoSessions do
   @moduledoc """
-  Documentation for `JidoSessions`.
+  Canonical session data types and parsers for coding agent conversations.
+
+  Supports Copilot, Claude, Codex, Gemini, and Pi agents with a unified
+  data model for sessions, turns, tool calls, and artifacts.
   """
 
+  alias JidoSessions.{Session, Turn}
+  alias JidoSessions.Parsers
+
   @doc """
-  Hello world.
+  Parses raw agent events into canonical `Turn` structs.
 
   ## Examples
 
-      iex> JidoSessions.hello()
-      :world
-
+      turns = JidoSessions.parse_turns(raw_events, :copilot)
+      # => [%Turn{user_content: "Fix the bug", tool_calls: [...]}]
   """
-  def hello do
-    :world
+  @spec parse_turns([map()], Session.agent()) :: [Turn.t()]
+  def parse_turns(events, agent) do
+    case agent do
+      :copilot -> Parsers.Copilot.parse_turns(events)
+      :claude -> Parsers.Claude.parse_turns(events)
+      :codex -> Parsers.Codex.parse_turns(events)
+      :gemini -> Parsers.Gemini.parse_turns(events)
+      :pi -> Parsers.Pi.parse_turns(events)
+    end
   end
 end
