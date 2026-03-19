@@ -29,10 +29,18 @@ defmodule JidoSessions do
   end
 
   @doc """
-  Generates a handoff markdown document for a session.
+  Generates a handoff document for a session.
+
+  Returns `{:ok, %{session: summary, handoff: data, markdown: string}}` or
+  `{:error, reason}`.
   """
-  @spec generate_handoff(module(), term(), String.t()) :: {:ok, String.t()} | {:error, term()}
-  defdelegate generate_handoff(store_mod, store, session_id),
+  @spec generate_handoff(module(), term(), String.t(), keyword()) ::
+          {:ok, map()} | {:error, term()}
+  defdelegate generate_handoff(store_mod, store, session_ref, opts \\ []),
     to: JidoSessions.Handoff,
     as: :generate
+
+  @doc "Returns a takeover prompt instructing the new agent how to resume."
+  @spec takeover_prompt(String.t()) :: String.t()
+  defdelegate takeover_prompt(handoff_url), to: JidoSessions.Handoff
 end

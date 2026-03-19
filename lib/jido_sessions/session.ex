@@ -22,6 +22,15 @@ defmodule JidoSessions.Session do
           agent_version: String.t() | nil
         }
 
+  @doc "Extracts the provider-local ID from a prefixed session ID."
+  @spec provider_id(String.t()) :: String.t()
+  def provider_id(id) when is_binary(id) do
+    case String.split(id, "_", parts: 2) do
+      [_prefix, pid] -> pid
+      [bare] -> bare
+    end
+  end
+
   @doc "Creates a prefixed session ID like 'gh_abc123' or 'claude_abc123'."
   @spec prefixed_id(agent(), String.t()) :: String.t()
   def prefixed_id(agent, provider_id) do

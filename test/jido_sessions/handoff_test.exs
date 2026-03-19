@@ -65,8 +65,11 @@ defmodule JidoSessions.HandoffTest do
   end
 
   test "generates handoff markdown", %{store: store} do
-    {:ok, markdown} = JidoSessions.generate_handoff(Memory, store, "gh_test-handoff")
+    {:ok, %{session: session, markdown: markdown}} =
+      JidoSessions.generate_handoff(Memory, store, "gh_test-handoff")
 
+    assert session.id == "gh_test-handoff"
+    assert session.agent == :copilot
     assert markdown =~ "Fix auth bug"
     assert markdown =~ "copilot"
     assert markdown =~ "mix test"
@@ -77,5 +80,18 @@ defmodule JidoSessions.HandoffTest do
 
   test "returns error for missing session", %{store: store} do
     assert {:error, :not_found} = JidoSessions.generate_handoff(Memory, store, "nope")
+  end
+
+  test "resolves session by provider id", %{store: store} do
+    {:ok, %{session: session}} =
+      JidoSessions.generate_handoff(Memory, store, "test-handoff", agent: :copilot)
+
+    assert session.id == "gh_test-handoff"
+  end
+
+  test "returns takeover prompt" do
+    prompt = JidoSessions.takeover_prompt("https://example.com/handoff.md")
+    assert prompt =~ "curl --silent https://example.com/handoff.md"
+    assert prompt =~ "taking over a coding task"
   end
 end
