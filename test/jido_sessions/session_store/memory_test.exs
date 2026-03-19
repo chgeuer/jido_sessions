@@ -77,8 +77,14 @@ defmodule JidoSessions.SessionStore.MemoryTest do
     end
 
     test "upsert replaces by path", %{store: store} do
-      Memory.upsert_artifacts(store, "s1", [%Artifact{path: "p.md", artifact_type: :plan, content: "v1"}])
-      Memory.upsert_artifacts(store, "s1", [%Artifact{path: "p.md", artifact_type: :plan, content: "v2"}])
+      Memory.upsert_artifacts(store, "s1", [
+        %Artifact{path: "p.md", artifact_type: :plan, content: "v1"}
+      ])
+
+      Memory.upsert_artifacts(store, "s1", [
+        %Artifact{path: "p.md", artifact_type: :plan, content: "v2"}
+      ])
+
       [art] = Memory.get_artifacts(store, "s1")
       assert art.content == "v2"
     end

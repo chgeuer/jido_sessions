@@ -91,9 +91,7 @@ defmodule JidoSessions.Watcher do
 
   defp do_sync(state) do
     stats =
-      JidoSessions.Sync.import_all(state.store_mod, state.store,
-        agents: state.agents
-      )
+      JidoSessions.Sync.import_all(state.store_mod, state.store, agents: state.agents)
 
     if stats.imported > 0 || stats.updated > 0 do
       Logger.info(

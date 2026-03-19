@@ -35,6 +35,6 @@ defmodule JidoSessions.Tools.Agent do
 
   defmodule ListResult do
     @type t :: %__MODULE__{agents: [map()]}
-    defstruct [agents: []]
+    defstruct agents: []
   end
 end

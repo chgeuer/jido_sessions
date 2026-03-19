@@ -84,7 +84,11 @@ defmodule JidoSessions.Parsers.ClaudeTest do
       %{type: "file-history-snapshot", data: %{}, timestamp: nil},
       %{type: "progress", data: %{}, timestamp: nil},
       %{type: "user", data: %{"message" => %{"content" => "Hi"}}, timestamp: nil},
-      %{type: "assistant", data: %{"message" => %{"content" => [%{"type" => "text", "text" => "Hello"}]}}, timestamp: nil}
+      %{
+        type: "assistant",
+        data: %{"message" => %{"content" => [%{"type" => "text", "text" => "Hello"}]}},
+        timestamp: nil
+      }
     ]
 
     [turn] = Claude.parse_turns(events)

@@ -37,11 +37,12 @@ defmodule JidoSessions.Parsers.Claude do
           result_text = extract_text_content(block["content"])
           is_error = block["is_error"] == true
 
-          {block["tool_use_id"], %{
-            "result" => result_text,
-            "success" => !is_error,
-            "error" => if(is_error, do: result_text)
-          }}
+          {block["tool_use_id"],
+           %{
+             "result" => result_text,
+             "success" => !is_error,
+             "error" => if(is_error, do: result_text)
+           }}
         end)
       else
         []

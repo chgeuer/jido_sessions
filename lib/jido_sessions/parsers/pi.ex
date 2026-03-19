@@ -89,8 +89,7 @@ defmodule JidoSessions.Parsers.Pi do
               {if(String.trim(text) != "", do: text, else: user), texts, reasoning, tools}
 
             "assistant" ->
-              Enum.reduce(content, {user, texts, reasoning, tools}, fn block,
-                                                                       {u, t, r, tc} ->
+              Enum.reduce(content, {user, texts, reasoning, tools}, fn block, {u, t, r, tc} ->
                 case block do
                   %{"type" => "thinking", "thinking" => thinking}
                   when is_binary(thinking) and thinking != "" ->

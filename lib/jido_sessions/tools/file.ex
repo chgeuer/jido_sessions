@@ -32,7 +32,7 @@ defmodule JidoSessions.Tools.File do
 
   defmodule PatchResult do
     @type t :: %__MODULE__{files_changed: [String.t()]}
-    defstruct [files_changed: []]
+    defstruct files_changed: []
   end
 
   defmodule WriteResult do

@@ -45,7 +45,11 @@ defmodule JidoSessions.Parsers.CopilotTest do
       %{type: "user.message", data: %{"content" => "Run tests"}, timestamp: nil},
       %{
         type: "tool.execution_start",
-        data: %{"toolCallId" => "c1", "toolName" => "bash", "arguments" => %{"command" => "mix test"}},
+        data: %{
+          "toolCallId" => "c1",
+          "toolName" => "bash",
+          "arguments" => %{"command" => "mix test"}
+        },
         timestamp: nil
       },
       %{

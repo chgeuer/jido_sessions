@@ -20,10 +20,19 @@ defmodule JidoSessions.HandoffTest do
     Memory.upsert_session(store, session)
 
     events = [
-      %{type: "user.message", data: %{"content" => "Fix the login bug"}, timestamp: nil, sequence: 0},
+      %{
+        type: "user.message",
+        data: %{"content" => "Fix the login bug"},
+        timestamp: nil,
+        sequence: 0
+      },
       %{
         type: "tool.execution_start",
-        data: %{"toolCallId" => "c1", "toolName" => "bash", "arguments" => %{"command" => "mix test"}},
+        data: %{
+          "toolCallId" => "c1",
+          "toolName" => "bash",
+          "arguments" => %{"command" => "mix test"}
+        },
         timestamp: nil,
         sequence: 1
       },
@@ -33,7 +42,12 @@ defmodule JidoSessions.HandoffTest do
         timestamp: nil,
         sequence: 2
       },
-      %{type: "assistant.message", data: %{"content" => "All tests pass!"}, timestamp: nil, sequence: 3}
+      %{
+        type: "assistant.message",
+        data: %{"content" => "All tests pass!"},
+        timestamp: nil,
+        sequence: 3
+      }
     ]
 
     Memory.insert_events(store, "gh_test-handoff", events)

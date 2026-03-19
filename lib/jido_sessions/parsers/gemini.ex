@@ -43,7 +43,7 @@ defmodule JidoSessions.Parsers.Gemini do
 
     {texts, reasoning_texts, tool_calls, usage} =
       Enum.reduce(assistant_events, {[], [], [], nil}, fn event,
-                                                         {texts, reasoning, tools, usage} ->
+                                                          {texts, reasoning, tools, usage} ->
         data = event.data
 
         reasoning =
